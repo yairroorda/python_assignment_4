@@ -75,7 +75,7 @@ PAIRS = tuple(combinations(SYSTEM))
 
 def advance(dt, n, bodies=SYSTEM, pairs=PAIRS):
     headerlist = ["body_name", "x_pos", "y_pos", "z_pos"]
-    with open("nbody_output", "w", newline="") as file:
+    with open("py_results", "w", newline="") as file:
         writer = csv.DictWriter(file, delimiter=";", fieldnames=headerlist)
         writer.writeheader()
         for i in range(n):

@@ -5,7 +5,11 @@ Luc Jonker 4836111
 _A paragraph (max. 200 words) explaining how the Python and C++ programs are different (How is the information in the simulation represented:
 Which data types do the programs use to represent the data for the simulation?)_
 
-The C++ implementation takes advantage of the object-oriented nature of the language, for example defining a class 'body' to store the information on the bodies. They also nicely define a vector3d class and define operations for addition, subtraction, norm, magnitude, etc. which cuts down on the amount of hard to parse mathematics later on. The python version precomputes all pairs of bodies before running, and takes advantage of that for its calculations.
+The C++ implementation takes advantage of the object-oriented nature of the language, 
+for example defining a class 'body' to store the information on the bodies. 
+They also nicely define a vector3d class and define operations for addition, subtraction, norm, magnitude, etc. which cuts down on the amount of hard to parse mathematics later on. 
+The python version precomputes all pairs of bodies before running, and takes advantage of that for its calculations. 
+It uses a dictionary datatype to store these precomputed values since there is no need for indexing and they make for a natural way to couple keys(planets) to values(planet properties)
 ## Reflection on assignment
 _A paragraph reflection on how you went about solving the task (max. 400
 words). Which steps did you take? How did you measure the runtime?
