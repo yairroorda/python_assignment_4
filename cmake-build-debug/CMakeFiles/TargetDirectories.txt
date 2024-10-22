@@ -1,0 +1,3 @@
+C:/Users/yairr/OneDrive - Delft University of Technology/CLionProjects/python-C_assignment_4/cmake-build-debug/CMakeFiles/nbody.dir
+C:/Users/yairr/OneDrive - Delft University of Technology/CLionProjects/python-C_assignment_4/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/yairr/OneDrive - Delft University of Technology/CLionProjects/python-C_assignment_4/cmake-build-debug/CMakeFiles/rebuild_cache.dir
