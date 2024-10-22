@@ -12,6 +12,7 @@
 import sys
 from math import sqrt, pi as PI
 import csv
+from time import perf_counter
 from xmlrpc.client import Boolean
 
 
@@ -136,9 +137,12 @@ def offset_momentum(ref, bodies=SYSTEM, px=0.0, py=0.0, pz=0.0):
 
 def main(n, write_results, ref="sun"):
     offset_momentum(BODIES[ref])
-    report_energy()
+    # report_energy()
+    start = perf_counter()
     advance(0.01, write_results, n)
-    report_energy()
+    stop = perf_counter()
+    # report_energy()
+    print("time:", stop - start)
 
 
 if __name__ == "__main__":

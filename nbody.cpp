@@ -12,6 +12,7 @@
 */
 
 #define _USE_MATH_DEFINES // https://docs.microsoft.com/en-us/cpp/c-runtime-library/math-constants?view=msvc-160
+#include <chrono>
 #include <cmath>
 #include <format>
 #include <iostream>
@@ -267,6 +268,7 @@ int main(int argc, char **argv) {
         std::cout << "(to set the number of iterations for the n-body simulation)." << std::endl;
         return EXIT_FAILURE;
     } else {
+        const std::chrono::system_clock::time_point start = std::chrono::system_clock::now();
         const unsigned int n = atoi(argv[1]);
         const std::string write(argv[2]);
         const bool writeResults = write == "true";
@@ -274,14 +276,19 @@ int main(int argc, char **argv) {
             prepareCSV();
         }
         offset_momentum(state);
-        std::cout << energy(state) << std::endl;
+        // std::cout << energy(state) << std::endl;
         for (int i = 0; i < n; ++i) {
             advance(state, 0.01);
             if (writeResults) {
                 appendPositionData(state);
             }
         }
-        std::cout << energy(state) << std::endl;
+        //std::cout << energy(state) << std::endl;
+        const std::chrono::system_clock::time_point end = std::chrono::system_clock::now();
+        // Time represented in seconds
+        const std::chrono::duration<double> duration = end - start;
+
+        std::cout << "time: " << duration.count() << std::endl;
         return EXIT_SUCCESS;
     }
 }
