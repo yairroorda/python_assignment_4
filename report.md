@@ -26,7 +26,7 @@ to produce the chart._
 _A short description of the hardware you run the simulation on (CPU,
 memory, operating system)._
 
-The system used to perform these tests is an HP Z-book, using Windows 11. The CPU is an Intel(R) Core(TM) i7-10750H CPU running at 2.60GHz Ghz. It has 16 GB of RAM.
+The system used to perform these tests is an HP Z-book, using Windows 11. The CPU is an Intel(R) Core(TM) i7-8750H CPU @ 2.20GHz. It has 16 GB of RAM.
 
 ## Spotting errors in C++
 ![img_1.png](img_1.png)

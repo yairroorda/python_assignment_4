@@ -12,12 +12,13 @@
 import sys
 from math import sqrt, pi as PI
 import csv
+from xmlrpc.client import Boolean
 
 
 def combinations(l):
     result = []
     for x in range(len(l) - 1):
-        ls = l[x + 1 :]
+        ls = l[x + 1:]
         for y in ls:
             result.append((l[x][0], l[x][1], l[x][2], y[0], y[1], y[2]))
     return result
@@ -73,33 +74,42 @@ BODIES = {
 SYSTEM = tuple(BODIES.values())
 PAIRS = tuple(combinations(SYSTEM))
 
-def advance(dt, n, bodies=SYSTEM, pairs=PAIRS):
-    headerlist = ["body_name", "x_pos", "y_pos", "z_pos"]
-    with open("py_results", "w", newline="") as file:
-        writer = csv.DictWriter(file, delimiter=";", fieldnames=headerlist)
-        writer.writeheader()
-        for i in range(n):
-            for ([x1, y1, z1], v1, m1, [x2, y2, z2], v2, m2) in pairs:
-                dx = x1 - x2
-                dy = y1 - y2
-                dz = z1 - z2
-                dist = sqrt(dx * dx + dy * dy + dz * dz)
-                mag = dt / (dist * dist * dist)
-                b1m = m1 * mag
-                b2m = m2 * mag
-                v1[0] -= dx * b2m
-                v1[1] -= dy * b2m
-                v1[2] -= dz * b2m
-                v2[2] += dz * b1m
-                v2[1] += dy * b1m
-                v2[0] += dx * b1m
-            for ( r, [vx, vy, vz], m, name) in bodies:
-                r[0] += dt * vx
-                r[1] += dt * vy
-                r[2] += dt * vz
 
-                #write line to csv
-                writer.writerow({"body_name":name, "x_pos":r[0], "y_pos":r[1], "z_pos":r[2]})
+def advance(dt, write_results, n, bodies=SYSTEM, pairs=PAIRS):
+    if write_results:
+        with open("py_results", "w", newline="") as file:
+            writer = csv.DictWriter(file, delimiter=";", fieldnames=["body_name", "x_pos", "y_pos", "z_pos"])
+            writer.writeheader()
+            for i in range(n):
+                do_advance(bodies, dt, pairs, write_results, writer)
+    else:
+        for i in range(n):
+            do_advance(bodies, dt, pairs, False, None)
+
+
+def do_advance(bodies, dt, pairs, write_results, writer):
+    for ([x1, y1, z1], v1, m1, [x2, y2, z2], v2, m2) in pairs:
+        dx = x1 - x2
+        dy = y1 - y2
+        dz = z1 - z2
+        dist = sqrt(dx * dx + dy * dy + dz * dz)
+        mag = dt / (dist * dist * dist)
+        b1m = m1 * mag
+        b2m = m2 * mag
+        v1[0] -= dx * b2m
+        v1[1] -= dy * b2m
+        v1[2] -= dz * b2m
+        v2[2] += dz * b1m
+        v2[1] += dy * b1m
+        v2[0] += dx * b1m
+    for (r, [vx, vy, vz], m, name) in bodies:
+        r[0] += dt * vx
+        r[1] += dt * vy
+        r[2] += dt * vz
+
+        if write_results:
+            # write line to csv
+            writer.writerow({"body_name": name, "x_pos": r[0], "y_pos": r[1], "z_pos": r[2]})
 
 
 def report_energy(bodies=SYSTEM, pairs=PAIRS, e=0.0):
@@ -113,7 +123,6 @@ def report_energy(bodies=SYSTEM, pairs=PAIRS, e=0.0):
     print("Energy: %.9f" % e)
 
 
-
 def offset_momentum(ref, bodies=SYSTEM, px=0.0, py=0.0, pz=0.0):
     for (r, [vx, vy, vz], m, name) in bodies:
         px -= vx * m
@@ -125,16 +134,16 @@ def offset_momentum(ref, bodies=SYSTEM, px=0.0, py=0.0, pz=0.0):
     v[2] = pz / m
 
 
-def main(n, ref="sun"):
+def main(n, write_results, ref="sun"):
     offset_momentum(BODIES[ref])
     report_energy()
-    advance(0.01, n)
+    advance(0.01, write_results, n)
     report_energy()
 
 
 if __name__ == "__main__":
     if len(sys.argv) >= 2:
-        main(int(sys.argv[1]))
+        main(int(sys.argv[1]), sys.argv[2].lower() == "true")
         sys.exit(0)
     else:
         print(f"This is {sys.argv[0]}")
