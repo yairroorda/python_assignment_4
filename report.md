@@ -51,7 +51,9 @@ to produce the chart._
 |    5000000 | 34.22389180s | 2.88441s   | 0.287725s   |
 |   50000000 | 467.7972619s | 28.0304s   | 2.61263s    |
 
-![img_2.png](img_2.png)
+
+![runtime_normarithmic.png](runtime_normarithmic.png)
+![runtime_logarithmic.png](runtime_logarithmic.png)
 
 ## Hardware used
 
