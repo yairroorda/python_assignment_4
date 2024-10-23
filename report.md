@@ -78,3 +78,8 @@ _One (or more, e.g. 1 overview and 1 close-up) screenshot of QGIS, where
 you have loaded a CSV file your code did produce for 5’000 iterations. If
 you have a recent version of QGIS, you can try to use the 3D map view as
 well._
+
+The full solar system looks like this when loaded into QGIS
+![Layout 1.png](Layout%201.png)
+When we zoom in on just the 'sun' we can see it also wiggles around a little bit, which is what we would expect from a good simulation.
+![SunSunSun.png](SunSunSun.png)
